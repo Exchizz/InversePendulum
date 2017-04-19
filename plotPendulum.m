@@ -1,32 +1,39 @@
 clc;clear;
-M = 1;      % kg
-l = 1;      % Meters
-I= M*l^2;   % kg*m^2
 
-g = 9.82;   % kg/s^2
-
-b = 1;
-
-theta    = -pi/2;
+g = 9.82; % kg/s^2
+theta = -pi/2;
 thetaVel = 0;
 thetaAcc = 0;
 dt = 0.01  % sek
+
+M_rod = 1;      % kg
+l_rod = 1;      % Meters
+I_rod = (1/3) * M_rod * l_rod^2;
+
+r_disk = 0.2;
+M_disk = 1;
+I_0 = M_disk * r_disk^2 /2
+I_disk = I_0 + M_disk * l_rod^2;
+
+I = I_rod + I_disk;
 
 figure;
 
 thetas = [];
 while 1
-    f = M * g*sin(theta);
-    tau = f*l - b*thetaVel;
+    f_rod = (M_rod * g*sin(theta));
+    f_disk = (M_disk * g*sin(theta));
+    tau = f_rod*l_rod/2 + f_disk*l_rod;
     thetaAcc = tau/I;
     
     thetaVel = thetaVel + thetaAcc*dt;
     theta = theta + thetaVel*dt
 
-    plot([0, l*sin(theta)],[0, l*cos(theta)]);
+    plot([0, l_rod*sin(theta)], [0, l_rod*cos(theta)]);
     hold on;
-    plot(l*sin(theta), l*cos(theta),'r.','MarkerSize',20) 
-    axis([-2*l 2*l -2*l 2*l]);
+    dot_ratio = 333;
+    plot(l_rod*sin(theta), l_rod*cos(theta),'r', 'MarkerSize', r_disk*dot_ratio)
+    axis([-2*l_rod 2*l_rod -2*l_rod 2*l_rod]);
     hold off;
 
     pause(dt);
