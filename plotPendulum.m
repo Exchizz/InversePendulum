@@ -20,6 +20,10 @@ I = I_rod + I_disk;
 figure;
 
 thetas = [];
+
+DiskLineBegin = [0;0];
+DiskLineEnd = [1;1];
+
 while 1
     f_rod = (M_rod * g*sin(theta));
     f_disk = (M_disk * g*sin(theta));
@@ -31,8 +35,15 @@ while 1
 
     plot([0, l_rod*sin(theta)], [0, l_rod*cos(theta)]);
     hold on;
-    dot_ratio = 333;
-    plot(l_rod*sin(theta), l_rod*cos(theta),'r.', 'MarkerSize', 20)
+    dot_ratio = 533;
+    plot(l_rod*sin(theta), l_rod*cos(theta),'r.', 'MarkerSize', r_disk*dot_ratio)
+    
+    % Spin circle
+    DiskLineEnd = rotation(deg2rad(10/2))*DiskLineEnd;
+    center = [l_rod*sin(theta); l_rod*cos(theta)];
+    plot([center(1) + DiskLineBegin(1), center(1) + DiskLineEnd(1)],[center(2) + DiskLineBegin(2), center(2) + DiskLineEnd(2)],'w-');
+    plot(l_rod*sin(theta), l_rod*cos(theta),'r', 'MarkerSize', r_disk*dot_ratio)
+
     axis([-2*l_rod 2*l_rod -2*l_rod 2*l_rod]);
     hold off;
 
