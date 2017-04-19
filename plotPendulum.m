@@ -32,7 +32,7 @@ while 1
     plot([0, l_rod*sin(theta)], [0, l_rod*cos(theta)]);
     hold on;
     dot_ratio = 333;
-    plot(l_rod*sin(theta), l_rod*cos(theta),'r', 'MarkerSize', r_disk*dot_ratio)
+    plot(l_rod*sin(theta), l_rod*cos(theta),'r.', 'MarkerSize', 20)
     axis([-2*l_rod 2*l_rod -2*l_rod 2*l_rod]);
     hold off;
 
