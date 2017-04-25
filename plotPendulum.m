@@ -1,7 +1,7 @@
 clc;clear;
 
 g = 9.82; % kg/s^2
-theta = -pi/2;
+theta = deg2rad(10);
 thetaVel = 0;
 thetaAcc = 0;
 dt = 0.01  % sek
@@ -19,23 +19,29 @@ I = I_rod + I_disk;
 
 figure;
 
-acc = 450; % rad / sec^2
+%acc = 450; % rad / sec^2
 
 thetas = [];
 
 DiskLineBegin = [0;0];
 DiskLineEnd = [1;1];
 
+% Pid
+k = 500;
+
 while 1
     f_rod = (M_rod * g*sin(theta));
     f_disk = (M_disk * g*sin(theta));
-    tau_g = f_rod*l_rod/2 + f_disk*l_rod
+    tau_g = f_rod*l_rod/2 + f_disk*l_rod;
 
-    tau_c = acc * I_0
+    error = -theta;
+    acc = k*error;
+
+    tau_c = acc * I_0;
     tau = tau_g + tau_c
 
     thetaAcc = tau/I
-    
+
     thetaVel = thetaVel + thetaAcc*dt;
     theta = theta + thetaVel*dt
 
@@ -43,9 +49,9 @@ while 1
     hold on;
     dot_ratio = 333;
     plot(l_rod*sin(theta), l_rod*cos(theta),'r.', 'MarkerSize', r_disk*dot_ratio)
-    
+
     % Spin circle
-    DiskLineEnd = rotation(deg2rad(10/2))*DiskLineEnd;
+    DiskLineEnd = rotation(thetaVel)*DiskLineEnd;
     center = [l_rod*sin(theta); l_rod*cos(theta)];
     plot([center(1) + DiskLineBegin(1), center(1) + DiskLineEnd(1)],[center(2) + DiskLineBegin(2), center(2) + DiskLineEnd(2)],'w-');
 
