@@ -1,7 +1,7 @@
 clc;clear;
 
 g = 9.82; % kg/s^2
-theta = deg2rad(10);
+theta = deg2rad(7);
 thetaVel = 0;
 thetaAcc = 0;
 dt = 0.01  % sek
@@ -37,13 +37,13 @@ while 1
     error = -theta;
     acc = k*error;
 
-    tau_c = acc * I_0;
-    tau = tau_g + tau_c
+    tau_c = acc * I_0
+    tau = tau_g + tau_c;
 
-    thetaAcc = tau/I
+    thetaAcc = tau/I;
 
     thetaVel = thetaVel + thetaAcc*dt;
-    theta = theta + thetaVel*dt
+    theta = theta + thetaVel*dt;
 
     plot([0, l_rod*sin(theta)], [0, l_rod*cos(theta)]);
     hold on;
